@@ -1,0 +1,172 @@
+(a / and
+   :li 1
+   :op1 (n / note-01
+           :ARG0 w
+           :ARG1 (l / limit-01
+                    :ARG0 f))
+   :op2 (a2 / assess-01
+            :ARG0 (w / we)
+            :ARG1 (ii / implicate-01
+                      :ARG0 (f / framework
+                               :mod (e / ethics)
+                               :mod (t / this))
+                      :ARG1 (e2 / effort-01
+                                :ARG1 (c / create-01
+                                         :ARG1 (a3 / and
+                                                   :op1 (l2 / law)
+                                                   :op2 (r / rule)
+                                                   :op3 (s / standard
+                                                           :mod (t2 / technical))
+                                                   :op4 (p / practice-01
+                                                           :ARG1 ii2
+                                                           :ARG1-of (h / have-degree-91
+                                                                       :ARG2 (g / good-02
+                                                                                :ARG1 p)
+                                                                       :ARG3 (m2 / most))))
+                                         :ARG3 (ii2 / intelligent-01
+                                                    :mod a4)
+                                         :location (c2 / context
+                                                       :quant (r2 / range
+                                                                  :ARG1-of (w2 / wide-02))))
+                                :time (f2 / future))))
+   :snt2 (w3 / word
+             :ARG1-of (k / key-02)
+             :domain (a5 / and
+                         :op1 (a6 / accountable-02)
+                         :op2 (a7 / autonomy)
+                         :op3 (ii3 / intelligent-01
+                                   :mod (a4 / artificial)))
+             :op4 (b / beneficence)
+             :op5 (e3 / ethics)
+             :op6 (e4 / explicate-01)
+             :op7 (f3 / fairness)
+             :op8 (ii4 / intelligibility)
+             :op9 (j / justice)
+             :op10 (m3 / malice
+                       :polarity -)))
+
+(w3 / word
+    :ARG1-of (k / key-02)
+    :domain (a5 / and
+                :op1 (a6 / accountable-02)
+                :op2 (a7 / autonomy)
+                :op3 (ii3 / intelligent-01
+                          :mod (a4 / artificial)))
+    :op4 (b / beneficence)
+    :op5 (e3 / ethics)
+    :op6 (e4 / explicate-01)
+    :op7 (f3 / fairness)
+    :op8 (ii4 / intelligibility)
+    :op9 (j / justice)
+    :op10 (m3 / malice
+              :polarity -))
+
+(a / allow-01
+   :li 52
+   :ARG0 (c / consider-02
+            :ARG1 (c2 / concept
+                      :mod (e / ethics)
+                      :example (a2 / and
+                                   :op1 (j / justice)
+                                   :op2 (f / fairness)
+                                   :op3 (t / transparency)
+                                   :op4 (a3 / accountable-02))))
+   :ARG1 (d / debate-01
+            :ARG1 (a4 / and
+                      :op1 (ii / impact-01
+                               :ARG0 ii2
+                               :ARG1 (s / society))
+                      :op2 (r / role
+                              :poss (ii2 / intelligent-01
+                                         :mod (a5 / artificial))
+                              :topic (l / live-01
+                                        :ARG0 (w / we))))
+            :ARG1-of (v / value-02)))
+
+(k / know-02
+   :ARG0 (c / community
+            :mod (o / organization
+                    :name (n / name
+                             :op1 "FATML")))
+   :ARG1 (t / this)
+   :ARG2 (a / and
+            :op1 (f / fairness)
+            :op2 (a2 / accountable-02)
+            :op3 (t2 / transparency)
+            :op4 (m2 / machine
+                     :ARG0-of (l / learn-01)))
+   :manner (b / broad))
+
+(a3 / and
+    :op1 (m4 / mention-01
+             :ARG0 (d / document
+                      :quant (n2 / number)
+                      :mod (t3 / this))
+             :ARG1 (w / worth-02
+                      :ARG1 (t4 / trust-02))
+             :ARG3 (c2 / characteristic-02
+                       :ARG1 (s2 / system
+                                 :mod ii2)
+                       :ARG2 s2
+                       :ARG1-of (d2 / desirable-02)))
+    :op2 (s3 / say-01
+             :ARG0 (p / publication
+                      :name (n3 / name
+                                :op1 "Reuters"))
+             :ARG1 s3
+             :ARG0 (g / government-organization
+                      :ARG0-of (a5 / administrate-01)
+                      :mod (p2 / person
+                               :name (n4 / name
+                                         :op1 "Trump")))
+             :ARG1 (a6 / and
+                       :op1 (r / recommend-01
+                               :ARG0 g
+                               :ARG1 (p3 / promote-02
+                                         :ARG0 g
+                                         :ARG1 (ii2 / intelligent-01
+                                                    :mod (a4 / artificial))
+                                         :mod (t5 / trustworthy)))
+                       :op2 (o2 / obligate-01
+                                :ARG0 g
+                                :ARG1 (a7 / agency)
+                                :ARG2 (c3 / consider-02
+                                          :ARG0 a7
+                                          :ARG1 (a8 / and
+                                                    :op1 (f / fairness)
+                                                    :op2 (d3 / discriminate-01
+                                                             :polarity -)
+                                                    :op3 (o3 / openness)
+                                                    :op4 (s4 / safe-01)
+                                                    :op5 (s5 / security)))))))
+
+(o / outline-01
+   :ARG0 (c / company
+            :name (n / name
+                     :op1 "Fujitsu"))
+   :ARG1 (p / principle
+            :topic (ii / intelligent-01
+                       :mod (a / artificial)
+                       :ARG1-of (c2 / center-01
+                                    :ARG2 (h / human)))
+            :ARG0-of (m / mention-01
+                        :ARG1 (s / seek-01
+                                 :ARG0 c
+                                 :ARG1 ii
+                                 :manner (c3 / consider-02
+                                             :ARG0 c
+                                             :ARG1 (a2 / and
+                                                       :op1 (f / fairness)
+                                                       :op2 (s2 / safe-01))
+                                             :purpose (p2 / prevent-01
+                                                          :ARG0 c
+                                                          :ARG1 (a3 / and
+                                                                    :op1 (d / discriminate-02)
+                                                                    :op2 (h2 / harm-01))))
+                                 :mod (t / trustworthy))))
+   :part-of (f2 / focus-01
+                :ARG0 c
+                :ARG2 (t2 / technology
+                          :mod (ii2 / information)
+                          :mod (c4 / cyber))))
+
