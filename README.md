@@ -30,9 +30,15 @@ python preprocess.py multisentence data/fair_AMR-500.amr data/fair_AMR-500_clean
 This will extract all split AMR sentence blocks mentioning 'fairness' and write them to the specified output file.
 
 ## Project Structure
-- `preprocessing/` - Project module, contains `multisentence.py` for AMR graph splitting and filtering
-- `preprocess.py` - CLI entry point (see usage above)
-- `requirements.txt` - Pip dependencies
+
+```
+project-root/
+├── preprocessing/
+│   └── multisentence.py    # AMR graph splitting and filtering
+├── preprocess.py           # CLI entry point (see usage above)
+├── requirements.txt        # Pip dependencies
+```
+
 
 ## Notes
 - The code uses the [penman](https://github.com/goodmami/penman) library to parse and split AMR graphs.
