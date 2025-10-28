@@ -1,4 +1,4 @@
-# CHAI Fairness AMR Preprocessing Project
+# CHAI Fairness Project
 
 ## Prerequisites
 - Python 3.12 or higher recommended
