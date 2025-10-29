@@ -10,8 +10,24 @@ Install the required dependencies using pip:
 pip install -r requirements.txt
 ```
 
-## Usage
-### Preprocessing AMR files
+## Preprocessing
+This section describes how to clean and prepare your data for analysis, including AMR splitting and CSS removal for text files.
+
+### Removing CSS from Text/HTML Files
+You can clean a directory of text or HTML files by removing all CSS with:
+
+```bash
+python preprocess.py remove_css <input_dir>
+```
+- `<input_dir>`: Path to the directory containing `.txt` or `.html` files. All files in that directory will be overwritten with CSS removed.
+
+#### Example
+```bash
+python preprocess.py remove_css data/texts/
+```
+This will process all files in the `data/texts/` directory, removing inline, style blocks, and stylesheet links from each file.
+
+### Splitting and Filtering AMR Files
 Use the provided command-line script to process AMR files using the multisentence splitting filter (specific to "fairness"):
 
 ```bash
@@ -26,8 +42,13 @@ python preprocess.py multisentence data/fair_AMR-500.amr data/fair_AMR-500_clean
 ```
 This will extract all split AMR sentence blocks mentioning 'fairness' and write them to the specified output file.
 
-### Analyzing AMR files
-AMR file analysis is available through `analyze.py`, which now uses argparse for modern CLI parsing. Two subcommands are available:
+---
+
+## Analyzing
+This section describes how to analyze the output AMR files for fairness, including summary statistics and centrality-based ranking.
+
+### Running Analyses
+The `analyze.py` CLI exposes several subcommands:
 
 - **summary**: Summarize fairness-specific statistics for an AMR file.
 - **centrality_score**: Show the top K AMR graphs with highest fairness centrality.
