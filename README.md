@@ -10,8 +10,14 @@ Install the required dependencies using pip:
 pip install -r requirements.txt
 ```
 
+---
+
 ## Preprocessing
 This section describes how to clean and prepare your data for analysis, including AMR splitting and CSS removal for text files.
+
+The preprocessing module (`preprocessing/`) provides two main functionalities:
+- **`cleaning.py`**: Utilities for removing CSS and HTML tags from text files
+- **`multisentence.py`**: AMR graph splitting and filtering for fairness-related content
 
 ### Removing CSS from Text/HTML Files
 You can clean a directory of text or HTML files by removing all CSS with:
@@ -20,6 +26,13 @@ You can clean a directory of text or HTML files by removing all CSS with:
 python preprocess.py remove_css <input_dir>
 ```
 - `<input_dir>`: Path to the directory containing `.txt` or `.html` files. All files in that directory will be overwritten with CSS removed.
+
+The `remove_css` command uses functions from `preprocessing/cleaning.py` to:
+- Remove `<style>` blocks
+- Remove `<link rel="stylesheet">` tags
+- Remove inline `style="..."` attributes
+- Remove CSS code blocks (including `@media`, `@keyframes`, etc.)
+- Clean up excessive whitespace
 
 #### Example
 ```bash
@@ -35,6 +48,12 @@ python preprocess.py multisentence <input_file> <output_file>
 ```
 - `<input_file>`: Path to your source AMR file (e.g., `data/fair_AMR-500.amr`)
 - `<output_file>`: Path to write the processed output (will be overwritten)
+
+The `multisentence` command uses functions from `preprocessing/multisentence.py` to:
+- Read AMR blocks from files (ignoring comments)
+- Split multi-sentence AMR graphs into individual sentence graphs
+- Extract subgraphs based on `:snt*` relations
+- Filter results to only include AMRs containing the word "fairness"
 
 #### Example
 ```bash
@@ -72,10 +91,13 @@ Run `python analyze.py -h` to see a list of all commands and options.
 ```
 project-root/
 ├── preprocessing/
-│   └── multisentence.py    # AMR graph splitting and filtering
+│   ├── cleaning.py         # CSS and HTML cleaning utilities
+│   ├── multisentence.py    # AMR graph splitting and filtering
+│   └── __init__.py         # Module exports
 ├── preprocess.py           # Preprocessing CLI entry point
 ├── analyze.py              # Analysis CLI entry point (summary & centrality)
 ├── requirements.txt        # Pip dependencies
+└── data/                   # Data directory (AMR files, text files, etc.)
 ```
 
 ## Notes
