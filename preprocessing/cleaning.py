@@ -1,20 +1,25 @@
+"""CSS and HTML cleaning utilities for text preprocessing."""
+
 import re
 
 
 def strip_html_keep_text(html: str) -> str:
     """
-    Very simple HTML -> text extractor:
-    - removes all tags like <...>
-    - collapses multiple blank lines
-    This avoids external libraries.
+    Extract plain text from HTML by removing all tags.
+
+    Args:
+        html: Input HTML string.
+
+    Returns:
+        Plain text with tags removed and whitespace normalized.
     """
-    # remove script contents
+    # Remove script tags and their contents
     html = re.sub(r"<script[^>]*>[\s\S]*?</script>", "", html, flags=re.IGNORECASE)
 
-    # remove remaining tags completely
+    # Remove all remaining HTML tags
     html = re.sub(r"<[^>]+>", "", html)
 
-    # collapse whitespace
+    # Normalize whitespace: convert \r to \n, collapse blank lines
     html = re.sub(r"\r", "\n", html)
     html = re.sub(r"\n[ \t]+\n", "\n", html)
     html = re.sub(r"\n{3,}", "\n\n", html)
@@ -23,30 +28,29 @@ def strip_html_keep_text(html: str) -> str:
 
 def remove_css_blocks(text: str) -> str:
     """
-    Remove CSS-like blocks of the form:
-    selector { ... }
-    including nested-looking content such as @media queries.
+    Remove CSS blocks (selector { ... }) from text.
 
-    Strategy:
-    - Greedy match from a selector up to the matching closing brace at same depth
-      is hard with pure regex, so we approximate:
-      1. Remove @media/@keyframes blocks with balanced braces using a manual parser.
-      2. Then repeatedly remove simple selector { ... } one-level blocks with regex.
+    Args:
+        text: Input text potentially containing CSS.
+
+    Returns:
+        Text with CSS blocks removed.
     """
-    # First: remove at-rule blocks like @media, @supports, @keyframes
+    # Remove at-rules (@media, @keyframes, etc.) first
     text = remove_at_rule_blocks(text)
 
-    # Then repeatedly remove simple "foo { ... }" blocks with no nested braces
+    # Remove simple CSS blocks (no nested braces)
     simple_block_pattern = re.compile(
         r"""
-        [^\{\};]+      # selector part (not { or } or ;)
+        [^\{\};]+      # selector part
         \{             # opening brace
-        [^\{\}]*       # block content without nested braces
+        [^\{\}]*       # content without nested braces
         \}             # closing brace
         """,
         re.VERBOSE,
     )
 
+    # Iterate until no more blocks are found
     prev = None
     while prev != text:
         prev = text
@@ -57,11 +61,13 @@ def remove_css_blocks(text: str) -> str:
 
 def remove_at_rule_blocks(text: str) -> str:
     """
-    Removes at-rule style blocks like:
-    @media (...) { ... }
-    @supports ... { ... }
-    @keyframes name { ... }
-    We do this with a small brace-matching parser.
+    Remove CSS at-rule blocks (@media, @keyframes, etc.) using brace matching.
+
+    Args:
+        text: Input text containing CSS at-rules.
+
+    Returns:
+        Text with at-rule blocks removed.
     """
     result = []
     i = 0
@@ -69,15 +75,15 @@ def remove_at_rule_blocks(text: str) -> str:
 
     while i < n:
         if text[i] == "@":
-            # move until first '{'
+            # Find opening brace
             brace_start = text.find("{", i)
             if brace_start == -1:
-                # no '{', so not actually a block like @media { ... }
+                # No brace found, keep character
                 result.append(text[i])
                 i += 1
                 continue
 
-            # now walk braces to find the matching closing '}' at same depth
+            # Match braces to find closing brace at same depth
             depth = 0
             j = brace_start
             matched = False
@@ -87,17 +93,16 @@ def remove_at_rule_blocks(text: str) -> str:
                 elif text[j] == "}":
                     depth -= 1
                     if depth == 0:
-                        # block ends at j
                         matched = True
                         break
                 j += 1
 
             if matched:
-                # We skip the whole @rule block
+                # Skip entire at-rule block
                 i = j + 1
                 continue
             else:
-                # malformed, fallback to keep char and move on
+                # Malformed block, keep character
                 result.append(text[i])
                 i += 1
         else:
@@ -109,36 +114,32 @@ def remove_at_rule_blocks(text: str) -> str:
 
 def remove_all_css(text: str) -> str:
     """
-    Remove as much CSS as possible from text.
-    Steps:
-    1. Remove <style>...</style>
-    2. Remove <link ... rel="stylesheet" ...>
-    3. Remove inline style attributes style="..." or style='...'
-    4. Remove CSS code blocks, including @media etc.
-    5. Cleanup multiple blank lines
-    """
+    Remove all CSS from text (style tags, links, inline attributes, code blocks).
 
-    # 1. Remove <style> blocks (case-insensitive, multiline)
+    Args:
+        text: Input text containing CSS.
+
+    Returns:
+        Text with all CSS removed and whitespace normalized.
+    """
+    # Remove <style> blocks
     text = re.sub(r"<style[^>]*>[\s\S]*?</style>", "", text, flags=re.IGNORECASE)
 
-    # 2. Remove <link ... rel="stylesheet" ...> tags
+    # Remove stylesheet link tags
     text = re.sub(
         r'<link[^>]*rel=["\']stylesheet["\'][^>]*>', "", text, flags=re.IGNORECASE
     )
 
-    # 3. Remove inline style attributes (double or single quotes)
-    #    Examples:
-    #    <div style="color:red; font-size:12px">
-    #    <p STYLE='margin:0;padding:0'>
+    # Remove inline style attributes (handles both single and double quotes)
     text = re.sub(r'\sstyle\s*=\s*"[^"]*"', "", text, flags=re.IGNORECASE)
     text = re.sub(r"\sstyle\s*=\s*'[^']*'", "", text, flags=re.IGNORECASE)
 
-    # 4. Remove raw CSS-like content outside of tags
+    # Remove raw CSS code blocks
     text = remove_css_blocks(text)
 
-    # 5. Collapse excessive blank lines / whitespace
-    text = re.sub(r"[ \t]+\n", "\n", text)  # trim line-end spaces
-    text = re.sub(r"\n\s*\n+", "\n\n", text)  # collapse many blank lines
+    # Normalize whitespace
+    text = re.sub(r"[ \t]+\n", "\n", text)
+    text = re.sub(r"\n\s*\n+", "\n\n", text)
     text = text.strip()
 
     return text
