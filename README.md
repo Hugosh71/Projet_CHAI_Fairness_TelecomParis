@@ -1,7 +1,20 @@
 # CHAI Fairness Project
 
+_Main analysis walkthrough and data visualizations live in `notebooks/IA_717_ProjectCHAI-fairness_2025.ipynb`._
+
 ## Prerequisites
 - Python 3.12 or higher recommended
+- Dataset setup:
+  - Clone the source data repository into `data/mapaie`:
+    ```bash
+    git clone https://gitlab.telecom-paris.fr/tiphaine.viard/mapaie data/mapaie
+    ```
+  - From the `data/mapaie` directory run:
+    ```bash
+    python dl_docs.py
+    python parse_docs.py
+    python preprocess.py
+    ```
 
 ## Installation
 Install the required dependencies using pip:
@@ -12,50 +25,39 @@ pip install -r requirements.txt
 
 ---
 
-## Preprocessing
+## Usage
+The main end-to-end analysis (including visualizations) is documented in `notebooks/IA_717_ProjectCHAI-fairness_2025.ipynb`. Command-line entry points are summarised below.
+
+### Preprocessing
 Clean and prepare data for analysis. The `preprocessing/` module provides CSS/HTML cleaning and AMR graph splitting utilities.
 
-### Removing CSS from Text/HTML Files
-You can clean a directory of text or HTML files by removing all CSS with:
-
+#### Removing CSS from Text/HTML Files
 ```bash
 python preprocess.py remove_css <input_dir>
 ```
 - `<input_dir>`: Path to the directory containing `.txt` or `.html` files. All files in that directory will be overwritten with CSS removed.
 
-#### Example
+Example:
 ```bash
-python preprocess.py remove_css data/texts/
+python preprocess.py remove_css data/mapaie/data/txts/
 ```
-This will process all files in the `data/texts/` directory, removing CSS from each file.
 
-### Splitting and Filtering AMR Files
-Process AMR files using multisentence splitting and filter for fairness-related content:
-
+#### Splitting and Filtering AMR Files
 ```bash
 python preprocess.py multisentence <input_file> <output_file>
 ```
 - `<input_file>`: Path to your source AMR file (e.g., `data/fair_AMR-500.amr`)
 - `<output_file>`: Path to write the processed output (will be overwritten)
 
-#### Example
+Example:
 ```bash
 python preprocess.py multisentence data/fair_AMR-500.amr data/fair_AMR-500_clean.amr
 ```
-This will extract all split AMR sentence blocks mentioning 'fairness' and write them to the specified output file.
 
----
+### Analyzing
+Analyze AMR files for fairness statistics and centrality-based ranking via the `analysis/` module.
 
-## Analyzing
-Analyze AMR files for fairness statistics and centrality-based ranking. The `analysis/` module provides summary statistics and graph ranking utilities.
-
-### Running Analyses
-The `analyze.py` CLI exposes several subcommands:
-
-- **summary**: Summarize fairness-specific statistics for an AMR file.
-- **centrality_score**: Show the top K AMR graphs with highest fairness centrality.
-
-#### Usage
+#### CLI Commands
 ```bash
 python analyze.py summary <input_file>
 python analyze.py centrality_score <input_file> [--k <K>]
@@ -63,17 +65,14 @@ python analyze.py centrality_score <input_file> [--k <K>]
 - `<input_file>`: Path to your AMR file.
 - `--k <K>`: (Optional, default: 10) Number of top central graphs to show for the `centrality_score` command.
 
-#### Example
+Example:
 ```bash
 python analyze.py summary data/fair_AMR-500_clean.amr
 python analyze.py centrality_score data/fair_AMR-500_clean.amr --k 5
 ```
 Run `python analyze.py -h` to see a list of all commands and options.
 
-### Using Modules Programmatically
-
-You can also import and use the modules directly in Python:
-
+#### Using Modules Programmatically
 ```python
 from preprocessing import process_amr_file, remove_all_css
 from analysis import analyze_fairness_amr, top_k_fairness_graphs
