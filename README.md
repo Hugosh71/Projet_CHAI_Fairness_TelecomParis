@@ -23,8 +23,6 @@ Install the required dependencies using pip:
 pip install -r requirements.txt
 ```
 
----
-
 ## Usage
 The main end-to-end analysis (including visualizations) is documented in `notebooks/IA_717_ProjectCHAI-fairness_2025.ipynb`. Command-line entry points are summarised below.
 
