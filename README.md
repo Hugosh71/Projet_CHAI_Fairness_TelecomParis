@@ -93,7 +93,7 @@ project-root/
 │   ├── multisentence.py    # AMR graph splitting and filtering
 │   └── __init__.py         # Module exports
 ├── analysis/
-│   ├── summary.py           # Fairness statistics analysis
+│   ├── summary.py          # Fairness statistics analysis
 │   ├── centrality_score.py # Centrality-based graph ranking
 │   └── __init__.py         # Module exports
 ├── notebooks/
