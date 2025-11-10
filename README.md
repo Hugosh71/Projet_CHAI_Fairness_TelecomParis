@@ -96,6 +96,9 @@ project-root/
 │   ├── summary.py           # Fairness statistics analysis
 │   ├── centrality_score.py # Centrality-based graph ranking
 │   └── __init__.py         # Module exports
+├── notebooks/
+│   ├── IA_717_ProjectCHAI-fairness_2025.ipynb        # Main analysis & visualization
+│   └── IA_717_ProjectCHAI-fairness_2025_*.ipynb      # Variant notebook
 ├── preprocess.py           # Preprocessing CLI entry point
 ├── analyze.py              # Analysis CLI entry point (summary & centrality)
 ├── requirements.txt        # Pip dependencies
