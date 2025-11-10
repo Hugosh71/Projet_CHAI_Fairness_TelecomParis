@@ -40,7 +40,7 @@ Example:
 python preprocess.py remove_css data/mapaie/data/txts/
 ```
 
-#### Splitting and Filtering AMR Files
+#### Splitting Multi-sentence AMR into single sentences
 ```bash
 python preprocess.py multisentence <input_file> <output_file>
 ```
